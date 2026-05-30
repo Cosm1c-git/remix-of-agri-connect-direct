@@ -9,8 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PoolingRouteImport } from './routes/pooling'
+import { Route as FarmerRouteImport } from './routes/farmer'
+import { Route as BuyerRouteImport } from './routes/buyer'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PoolingRoute = PoolingRouteImport.update({
+  id: '/pooling',
+  path: '/pooling',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmerRoute = FarmerRouteImport.update({
+  id: '/farmer',
+  path: '/farmer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyerRoute = BuyerRouteImport.update({
+  id: '/buyer',
+  path: '/buyer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +43,72 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/buyer': typeof BuyerRoute
+  '/farmer': typeof FarmerRoute
+  '/pooling': typeof PoolingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/buyer': typeof BuyerRoute
+  '/farmer': typeof FarmerRoute
+  '/pooling': typeof PoolingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/buyer': typeof BuyerRoute
+  '/farmer': typeof FarmerRoute
+  '/pooling': typeof PoolingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/admin' | '/buyer' | '/farmer' | '/pooling'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/admin' | '/buyer' | '/farmer' | '/pooling'
+  id: '__root__' | '/' | '/admin' | '/buyer' | '/farmer' | '/pooling'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  BuyerRoute: typeof BuyerRoute
+  FarmerRoute: typeof FarmerRoute
+  PoolingRoute: typeof PoolingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pooling': {
+      id: '/pooling'
+      path: '/pooling'
+      fullPath: '/pooling'
+      preLoaderRoute: typeof PoolingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farmer': {
+      id: '/farmer'
+      path: '/farmer'
+      fullPath: '/farmer'
+      preLoaderRoute: typeof FarmerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buyer': {
+      id: '/buyer'
+      path: '/buyer'
+      fullPath: '/buyer'
+      preLoaderRoute: typeof BuyerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +121,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  BuyerRoute: BuyerRoute,
+  FarmerRoute: FarmerRoute,
+  PoolingRoute: PoolingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
