@@ -37,23 +37,27 @@ function AdminPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Platform analytics and overview.</p>
+        <div className="animate-fade-in-up">
+          <div className="text-xs font-semibold uppercase tracking-wider text-primary">Admin</div>
+          <h1 className="text-3xl font-bold">Platform Dashboard</h1>
+          <p className="text-sm text-muted-foreground">Live analytics across farmers, buyers, and exports.</p>
+        </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-4">
           {[
-            { icon: Users, label: "Total Farmers", value: 1250 + uniqueFarmers },
-            { icon: ShoppingBag, label: "Total Buyers", value: 320 + uniqueBuyers },
-            { icon: Sprout, label: "Crop Listings", value: crops.length },
-            { icon: Globe2, label: "Export Requests", value: requests.length },
-          ].map((s) => (
-            <Card key={s.label} className="shadow-card">
-              <CardContent className="flex items-center gap-3 p-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-primary"><s.icon className="h-5 w-5" /></div>
-                <div>
-                  <div className="text-xs text-muted-foreground">{s.label}</div>
-                  <div className="text-2xl font-bold">{s.value}</div>
+            { icon: Users, label: "Total Farmers", value: 1250 + uniqueFarmers, delta: "+12%" },
+            { icon: ShoppingBag, label: "Total Buyers", value: 320 + uniqueBuyers, delta: "+8%" },
+            { icon: Sprout, label: "Crop Listings", value: crops.length, delta: "+24%" },
+            { icon: Globe2, label: "Export Requests", value: requests.length, delta: "+15%" },
+          ].map((s, i) => (
+            <Card key={s.label} className="hover-lift shadow-card animate-fade-in-up" style={{ animationDelay: `${i * 80}ms` }}>
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-hero text-primary-foreground shadow-card"><s.icon className="h-5 w-5" /></div>
+                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">{s.delta}</span>
                 </div>
+                <div className="mt-4 text-xs uppercase tracking-wider text-muted-foreground">{s.label}</div>
+                <div className="text-3xl font-bold">{s.value}</div>
               </CardContent>
             </Card>
           ))}
